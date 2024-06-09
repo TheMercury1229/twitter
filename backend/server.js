@@ -1,9 +1,13 @@
 import express from "express";
-import authRouter from "./routes/auth.routes.js";
 import dotenv from "dotenv";
-import cookieParser from "cookie-parser";
-import connectDb from "./db/dbConnection.js";
 dotenv.config();
+import cookieParser from "cookie-parser";
+// DB Imports
+import connectDb from "./db/dbConnection.js";
+// Routes Imports
+import authRouter from "./routes/auth.routes.js";
+import userRouter from "./routes/user.routes.js";
+
 const app = express();
 const PORT = process.env.PORT;
 // Middlewares
@@ -14,6 +18,8 @@ app.use(cookieParser()); //To parse the cookies
 connectDb();
 // API Endpoints
 app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
+
 // Listening on Server
 app.listen(PORT, () => {
   console.log("Server is running on port ", PORT);
