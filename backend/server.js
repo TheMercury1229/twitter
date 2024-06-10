@@ -7,6 +7,8 @@ import connectDb from "./db/dbConnection.js";
 // Routes Imports
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
+import postRouter from "./routes/post.routes.js";
+// Config of cloudinary and dotenv
 dotenv.config();
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -25,6 +27,7 @@ connectDb();
 // API Endpoints
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
+app.use("/api/post", postRouter);
 
 // Listening on Server
 app.listen(PORT, () => {

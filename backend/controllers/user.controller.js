@@ -87,20 +87,12 @@ export const getSuggestedUser = async (req, res) => {
 };
 
 export const updateProfile = async (req, res) => {
-  const {
-    fullName,
-    email,
-    password,
-    username,
-    currentPassword,
-    newPassword,
-    bio,
-    link,
-  } = req.body;
+  const { fullName, email, username, currentPassword, newPassword, bio, link } =
+    req.body;
   let { profilePic, coverPic } = req.body;
   const userId = req.user._id;
   try {
-    const user = await User.findById(userId);
+    let user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User Not Found" });
     // Checking if both password are correct
     if (
@@ -150,8 +142,9 @@ export const updateProfile = async (req, res) => {
     // Updating profile
     user.fullName = fullName || user.fullName;
     user.email = email || user.email;
-    user.bio = fullName || user.bio;
+    user.bio = bio || user.bio;
     user.link = link || user.link;
+    user.username = username || user.username;
     user.profilePic = profilePic || user.profilePic;
     user.coverPic = coverPic || user.coverPic;
     user = await user.save();
