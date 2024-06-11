@@ -75,6 +75,7 @@ const ProfilePage = () => {
                   src={coverImg || user?.coverImg || "/cover.png"}
                   className="h-52 w-full object-cover"
                   alt="cover image"
+                  accept="*/images"
                 />
                 {isMyProfile && (
                   <div
