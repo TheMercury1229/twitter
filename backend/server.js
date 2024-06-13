@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import path from "path";
 import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
 // DB Imports
@@ -19,6 +20,7 @@ cloudinary.config({
 // Express Configuring
 const app = express();
 const PORT = process.env.PORT;
+const __dirname = path.resolve();
 // Middlewares
 app.use(express.json({ limit: "5mb" })); //To parse req.body
 app.use(express.urlencoded({ extended: true })); //To parse form data
@@ -30,7 +32,11 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
 app.use("/api/notification", notificationRouter);
-
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
+// Ready for deployment
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+});
 // Listening on Server
 app.listen(PORT, () => {
   console.log("Server is running on port ", PORT);
