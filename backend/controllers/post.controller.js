@@ -57,7 +57,10 @@ export const likeUnlikePost = async (req, res) => {
           },
         }
       );
-      res.status(200).json({ message: "Post unliked successfully" });
+      const updatedLikes = post.likes.filter(
+        (id) => id.toString() !== userId.toString()
+      );
+      res.status(200).json(updatedLikes);
     } else {
       // Like Post
       post.likes.push(userId);
@@ -69,7 +72,7 @@ export const likeUnlikePost = async (req, res) => {
         type: "like",
       });
       await notification.save();
-      res.status(200).json({ message: "Post liked successfully" });
+      res.status(200).json(post.likes);
     }
   } catch (error) {
     console.log("Error in like unlike Post controller", error);
@@ -110,6 +113,7 @@ export const commentOnPost = async (req, res) => {
 // Delete A Post
 export const deletePost = async (req, res) => {
   try {
+    const { id } = req.params;
     // Finding the post from id
     const post = await Post.findById(req.params.id);
     // Checking if the post exist
@@ -128,7 +132,7 @@ export const deletePost = async (req, res) => {
       await cloudinary.uploader.destroy(imgId);
     }
     // Deleting the post
-    await Post.findByIdAndDelete(req.params._id);
+    await Post.findByIdAndDelete(id);
     res.status(200).json({ message: "Post deleted successfully" });
   } catch (error) {
     console.log("Error in delete post controller", error);
@@ -140,7 +144,7 @@ export const getAllPosts = async (req, res) => {
   try {
     // Getting post and user profile who created it
     const posts = await Post.find()
-      .sort({ createdAt: 1 })
+      .sort({ createdAt: -1 })
       .populate({
         path: "user",
         select: "-password",

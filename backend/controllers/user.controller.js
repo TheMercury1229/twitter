@@ -79,7 +79,7 @@ export const getSuggestedUser = async (req, res) => {
     );
     const suggestedUsers = filteredUsers.slice(0, 4);
     suggestedUsers.forEach((user) => (user.password = null));
-    res.status(200).json(suggestedUsers);
+    res.status(200).json({ suggestedUsers });
   } catch (error) {
     console.log("Error in get suggest user", error);
     res.status(500).json({ error: error.message });
