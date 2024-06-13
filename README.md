@@ -8,10 +8,8 @@ This is a clone of X, a social media platform, built using the MERN stack (Mongo
 
 - [Features](#features) 
 - [Installation](#Steps)
-- [Environment Variables](#environment-variables)
 - [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
