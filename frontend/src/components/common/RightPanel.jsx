@@ -14,7 +14,8 @@ const RightPanel = () => {
         const errorData = await response.json();
         throw new Error(errorData.message || "Something went wrong");
       }
-      return response.json();
+      const data = await response.json();
+      return data;
     },
   });
 
@@ -22,7 +23,7 @@ const RightPanel = () => {
     return <div className="md:w-64 w-0">Error loading suggested users</div>;
   }
 
-  const suggestedUsers = data?.suggestedUsers || [];
+  const suggestedUsers = data || [];
 
   if (suggestedUsers.length === 0 && !isLoading) {
     return <div className="md:w-64 w-0">No users to suggest</div>;

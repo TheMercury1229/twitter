@@ -9,11 +9,6 @@ import { BiLogOut } from "react-icons/bi";
 import toast from "react-hot-toast";
 
 const Sidebar = () => {
-  const data = {
-    fullName: "John Doe",
-    username: "johndoe",
-    profileImg: "/avatars/boy1.png",
-  };
   const queryClient = useQueryClient();
   const { mutate: logout } = useMutation({
     mutationFn: async () => {
@@ -38,6 +33,8 @@ const Sidebar = () => {
       toast.error("Logout Successful");
     },
   });
+  // Fetching The Current  User
+  const { data: authUser } = useQuery({ queryKey: ["authUser"] });
   const sideLinks = [
     {
       text: "Home",
@@ -52,11 +49,10 @@ const Sidebar = () => {
     {
       text: "Profile",
       icon: <FaUser className="w-6 h-6" />,
-      link: `/profile/${data?.username}`,
+      link: `/profile/${authUser?.username}`,
     },
   ];
-  // Fetching The Current  User
-  const { data: authUser } = useQuery({ queryKey: ["authUser"] });
+
   return (
     <aside className="md:flex-[2_2_0] w-18 max-w-52">
       <div className="sticky top-0 left-0 h-screen flex flex-col border-r border-gray-700 w-20 md:w-full">
